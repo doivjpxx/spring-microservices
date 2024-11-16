@@ -1,4 +1,4 @@
-package com.learnspring.accounts.services.impl;
+package com.learnspring.accounts.audit;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
