@@ -1,9 +1,6 @@
-﻿package com.learnspring.loans.entities;
+package com.learnspring.loans.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -12,6 +9,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "loans")
 public class Loan extends BaseEntity {
 
     @Id

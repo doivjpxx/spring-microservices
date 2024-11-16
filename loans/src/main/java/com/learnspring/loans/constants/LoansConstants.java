@@ -1,6 +1,6 @@
-﻿package com.learnspring.loans.constants;
+package com.learnspring.loans.constants;
 
-public class LoansConstants {
+public final class LoansConstants {
     private LoansConstants() {
         // restrict instantiation
     }

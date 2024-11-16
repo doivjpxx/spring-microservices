@@ -1,4 +1,4 @@
-﻿package com.learnspring.loans.exceptions;
+package com.learnspring.loans.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

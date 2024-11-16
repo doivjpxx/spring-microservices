@@ -1,4 +1,4 @@
-﻿package com.learnspring.loans.exceptions;
+package com.learnspring.loans.exceptions;
 
 import com.learnspring.loans.dtos.ErrorResponseDto;
 import org.springframework.http.HttpHeaders;

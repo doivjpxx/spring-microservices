@@ -1,4 +1,4 @@
-﻿package com.learnspring.loans.entities;
+package com.learnspring.loans.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
