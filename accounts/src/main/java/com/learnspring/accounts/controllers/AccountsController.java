@@ -4,6 +4,8 @@ import com.learnspring.accounts.constants.AccountsConstants;
 import com.learnspring.accounts.dtos.CustomerDto;
 import com.learnspring.accounts.dtos.ResponseDto;
 import com.learnspring.accounts.services.IAccountService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,7 +20,7 @@ public class AccountsController {
     private IAccountService accountService;
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseDto> createAccount(@RequestBody CustomerDto customerDto) {
+    public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto) {
         accountService.createAccount(customerDto);
 
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -26,7 +28,7 @@ public class AccountsController {
     }
 
     @GetMapping("/fetch")
-    public ResponseEntity<CustomerDto> fetchAccount(@RequestParam String mobileNumber) {
+    public ResponseEntity<CustomerDto> fetchAccount(@RequestParam @Pattern(regexp = "(^$|[0-9]{10})", message = "AccountNumber must be 10 digits") String mobileNumber) {
         CustomerDto customerDto = accountService.getAccount(mobileNumber);
 
         return ResponseEntity.status(HttpStatus.OK)
