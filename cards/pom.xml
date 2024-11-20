@@ -11,6 +11,7 @@
 	<groupId>com.learnspring</groupId>
 	<artifactId>cards</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>cards</name>
 	<description>Card Service</description>
 	<url/>
