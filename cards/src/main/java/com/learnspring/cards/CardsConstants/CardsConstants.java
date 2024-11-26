@@ -1,6 +1,6 @@
 package com.learnspring.cards.CardsConstants;
 
-public static class CardsConstants {
+public final class CardsConstants {
 
     private CardsConstants() {
         // restrict instantiation
