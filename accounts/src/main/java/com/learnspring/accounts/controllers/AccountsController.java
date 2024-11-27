@@ -1,6 +1,7 @@
 package com.learnspring.accounts.controllers;
 
 import com.learnspring.accounts.constants.AccountsConstants;
+import com.learnspring.accounts.dtos.AccountContactInfoDto;
 import com.learnspring.accounts.dtos.CustomerDto;
 import com.learnspring.accounts.dtos.ResponseDto;
 import com.learnspring.accounts.services.IAccountService;
@@ -10,6 +11,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +25,18 @@ import org.springframework.web.bind.annotation.*;
         description = "This API is used to perform CRUD operations on accounts"
 )
 @RestController
-@AllArgsConstructor
 @Validated
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class AccountsController {
 
+    @Autowired
     private IAccountService accountService;
+
+    @Autowired
+    private AccountContactInfoDto accountContactInfoDto;
+
+    @Autowired
+    private Environment environment;
 
     @Operation(
             summary = "Create an account",
@@ -104,5 +114,17 @@ public class AccountsController {
                     .status(HttpStatus.EXPECTATION_FAILED)
                     .body(new ResponseDto(AccountsConstants.STATUS_417, AccountsConstants.MESSAGE_417_DELETE));
         }
+    }
+
+    @GetMapping("/version")
+    public ResponseEntity<String> getBuildInfo() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(environment.getProperty("build.version"));
+    }
+
+    @GetMapping("/contact")
+    public ResponseEntity<AccountContactInfoDto> getContactInfo() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(accountContactInfoDto);
     }
 }
