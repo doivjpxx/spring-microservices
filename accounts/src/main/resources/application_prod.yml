@@ -1,0 +1,14 @@
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+build:
+  version: "1.0"
+
+accounts:
+  message: "Accounts Microservice -prod"
+  contactDetails:
+    email: "phong@x.com"
+    phone: "123-456-7890"
+    name: "Phong"
