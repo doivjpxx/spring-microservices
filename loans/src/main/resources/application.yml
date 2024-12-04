@@ -1,8 +1,8 @@
 server:
-  port: 9000
+  port: 8090
 spring:
   application:
-    name: "cards"
+    name: "loans"
   profiles:
     active: "prod"
   datasource:
