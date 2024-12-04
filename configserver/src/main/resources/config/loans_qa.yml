@@ -1,0 +1,14 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+build:
+  version: "1.0"
+
+accounts:
+  message: "Loans Microservice -qa"
+  contactDetails:
+    email: "phong@x.com"
+    phone: "123-456-7890"
+    name: "Phong"

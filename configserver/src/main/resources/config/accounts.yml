@@ -16,8 +16,8 @@ spring:
     show-sql: true
   config:
     import:
-      - "application_qa.yml"
-      - "application_prod.yml"
+      - "accounts_qa.yml"
+      - "accounts_prod.yml"
   profiles:
     active:
       - "qa"
