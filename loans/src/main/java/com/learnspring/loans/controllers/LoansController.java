@@ -3,6 +3,7 @@ package com.learnspring.loans.controllers;
 import com.learnspring.loans.constants.LoansConstants;
 import com.learnspring.loans.dtos.ErrorResponseDto;
 import com.learnspring.loans.dtos.LoanDto;
+import com.learnspring.loans.dtos.LoansContactInfoDto;
 import com.learnspring.loans.dtos.ResponseDto;
 import com.learnspring.loans.services.ILoansService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +15,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +28,18 @@ import org.springframework.web.bind.annotation.*;
         description = "This API is used to perform CRUD operations on loans"
 )
 @RestController
-@AllArgsConstructor
 @Validated
 @RequestMapping(value = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class LoansController {
+
+    @Autowired
     private ILoansService loansService;
+
+    @Autowired
+    private LoansContactInfoDto loansContactInfoDto;
+
+    @Autowired
+    private Environment environment;
 
     @Operation(
             summary = "Create a loan",
@@ -143,5 +153,15 @@ public class LoansController {
                     .status(HttpStatus.EXPECTATION_FAILED)
                     .body(new ResponseDto(LoansConstants.STATUS_417, LoansConstants.MESSAGE_417_DELETE));
         }
+    }
+
+    @GetMapping("/version")
+    public ResponseEntity<String> getVersion() {
+        return ResponseEntity.status(HttpStatus.OK).body(environment.getProperty("build.version"));
+    }
+
+    @GetMapping("/contact")
+    public ResponseEntity<LoansContactInfoDto> getContactInfo() {
+        return ResponseEntity.status(HttpStatus.OK).body(loansContactInfoDto);
     }
 }
