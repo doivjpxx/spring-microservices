@@ -2,6 +2,7 @@ package com.learnspring.cards.controllers;
 
 import com.learnspring.cards.CardsConstants.CardsConstants;
 import com.learnspring.cards.dtos.CardDto;
+import com.learnspring.cards.dtos.LoansContactInfoDto;
 import com.learnspring.cards.dtos.ResponseDto;
 import com.learnspring.cards.services.ICardService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +10,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +23,18 @@ import org.springframework.web.bind.annotation.*;
         description = "This API is used to perform CRUD operations on cards"
 )
 @Validated
-@AllArgsConstructor
 @RestController
 @RequestMapping(value = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class CardsController {
 
+    @Autowired
     private ICardService cardService;
+
+    @Autowired
+    private LoansContactInfoDto loansContactInfoDto;
+
+    @Autowired
+    private Environment environment;
 
     @Operation(
             summary = "Create a card",
@@ -79,6 +88,16 @@ public class CardsController {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ResponseDto(CardsConstants.STATUS_200, CardsConstants.MESSAGE_200));
+    }
+
+    @GetMapping("/version")
+    public ResponseEntity<String> getVersion() {
+        return ResponseEntity.status(HttpStatus.OK).body(environment.getProperty("app.version"));
+    }
+
+    @GetMapping("/contact")
+    public ResponseEntity<LoansContactInfoDto> getContactInfo() {
+        return ResponseEntity.status(HttpStatus.OK).body(loansContactInfoDto);
     }
 
 }
