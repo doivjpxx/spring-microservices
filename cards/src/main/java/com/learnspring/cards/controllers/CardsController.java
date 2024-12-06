@@ -2,14 +2,13 @@ package com.learnspring.cards.controllers;
 
 import com.learnspring.cards.CardsConstants.CardsConstants;
 import com.learnspring.cards.dtos.CardDto;
-import com.learnspring.cards.dtos.LoansContactInfoDto;
+import com.learnspring.cards.dtos.CardsContactInfoDto;
 import com.learnspring.cards.dtos.ResponseDto;
 import com.learnspring.cards.services.ICardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -31,7 +30,7 @@ public class CardsController {
     private ICardService cardService;
 
     @Autowired
-    private LoansContactInfoDto loansContactInfoDto;
+    private CardsContactInfoDto cardsContactInfoDto;
 
     @Autowired
     private Environment environment;
@@ -96,8 +95,8 @@ public class CardsController {
     }
 
     @GetMapping("/contact")
-    public ResponseEntity<LoansContactInfoDto> getContactInfo() {
-        return ResponseEntity.status(HttpStatus.OK).body(loansContactInfoDto);
+    public ResponseEntity<CardsContactInfoDto> getContactInfo() {
+        return ResponseEntity.status(HttpStatus.OK).body(cardsContactInfoDto);
     }
 
 }

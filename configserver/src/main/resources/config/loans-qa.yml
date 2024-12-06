@@ -6,7 +6,7 @@ spring:
 build:
   version: "1.0"
 
-accounts:
+loans:
   message: "Loans Microservice -qa"
   contactDetails:
     email: "phong@x.com"

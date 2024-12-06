@@ -1,13 +1,13 @@
 spring:
   config:
     activate:
-      on-profile: "qa"
+      on-profile: "prod"
 
 build:
   version: "1.0"
 
-accounts:
-  message: "Cards Microservice -qa"
+cards:
+  message: "Cards Microservice -prod"
   contactDetails:
     email: "phong@x.com"
     phone: "123-456-7890"
