@@ -1,19 +1,36 @@
 services:
-  rabbitmq:
-    image: rabbitmq:3.13-management
-    hostname: rabbitmq
+  accountsdb:
+    image: mysql
+    container_name: accountsdb
     ports:
-      - "5672:5672"
-      - "15672:15672"
-    healthcheck:
-      test: rabbitmq-diagnostics check_port_connectivity
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 5s
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: accountsdb
     extends:
+      service: microservice-db-config
       file: common-config.yml
-      service: network-deploy-service
+
+  loansdb:
+    image: mysql
+    container_name: loansdb
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: loansdb
+    extends:
+      service: microservice-db-config
+      file: common-config.yml
+
+  cardsdb:
+    image: mysql
+    container_name: cardsdb
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_DATABASE: cardsdb
+    extends:
+      service: microservice-db-config
+      file: common-config.yml
 
   configserver:
     build:
@@ -22,9 +39,6 @@ services:
     container_name: configserver
     ports:
       - "8071:8071"
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8071/actuator/health"]
       interval: 30s
@@ -43,6 +57,9 @@ services:
       - "8080:8080"
     environment:
       SPRING_APPLICATION_NAME: "accounts"
+      SPRING_DATASOURCE_URL: jdbc:mysql://accountsdb:3306/accountsdb
+    depends_on:
+      - accountsdb
     extends:
       file: common-config.yml
       service: microservice-configserver-config
@@ -56,6 +73,9 @@ services:
       - "8090:8090"
     environment:
       SPRING_APPLICATION_NAME: "loans"
+      SPRING_DATASOURCE_URL: jdbc:mysql://loansdb:3306/loansdb
+    depends_on:
+      - loansdb
     extends:
       file: common-config.yml
       service: microservice-configserver-config
@@ -69,6 +89,9 @@ services:
       - "9000:9000"
     environment:
       SPRING_APPLICATION_NAME: "cards"
+      SPRING_DATASOURCE_URL: jdbc:mysql://cardsdb:3306/cardsdb
+    depends_on:
+      - cardsdb
     extends:
       file: common-config.yml
       service: microservice-configserver-config
